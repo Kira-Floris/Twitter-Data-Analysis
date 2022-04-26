@@ -35,8 +35,8 @@ class TestTweetDfExtractor(unittest.TestCase):
         text = ['RT @nikitheblogger: Irre: Annalena Baerbock sagt, es bricht ihr das Herz, dass man nicht bedingungslos schwere Waffen liefert.\nMir bricht e…', 'RT @sagt_mit: Merkel schaffte es in 1 Jahr 1 Million "Flüchtlinge" durchzufüttern, jedoch nicht nach 16 Jahren 1 Million Rentner aus der Ar…', 'RT @Kryptonoun: @WRi007 Pharma in Lebensmitteln, Trinkwasser, in der Luft oder in der Zahnpasta irgendwo muss ein Beruhigungsmittel bzw. Be…', 'RT @WRi007: Die #Deutschen sind ein braves Volk!. Mit #Spritpreisen von 2 Euro abgefunden. Mit #inflation abgefunden. Mit höheren #Abgaben…', 'RT @RolandTichy: Baerbock verkündet mal so nebenhin in Riga das Ende der Energieimporte aus Russland. Habeck rudert schon zurück, Scholz sc…']
         self.assertEqual(self.df.find_full_text(), text)
 
-    # def test_find_sentiments(self):
-    #     self.assertEqual(self.df.find_sentiments(self.df.find_full_text()), ([0.16666666666666666, 0.13333333333333333, 0.3166666666666667, 0.08611111111111111, 0.27999999999999997], [0.18888888888888888, 0.45555555555555555, 0.48333333333333334, 0.19722222222222224, 0.6199999999999999]))
+    def test_find_sentiments(self):
+        self.assertEqual(self.df.find_sentiments(self.df.find_full_text()), ([0, 0, 0, 0, 0], [0, 0, 0, 0, 0]))
 
     def test_find_created_time(self):
         created_at = ['Fri Apr 22 22:20:18 +0000 2022','Fri Apr 22 22:19:16 +0000 2022','Fri Apr 22 22:17:28 +0000 2022','Fri Apr 22 22:17:20 +0000 2022','Fri Apr 22 22:13:15 +0000 2022']
@@ -60,7 +60,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_friends_count(), friends_count)
 
     def test_find_is_sensitive(self):
-        self.assertEqual(self.df.is_sensitive(), [None, None, None, None, None])
+        self.assertEqual(self.df.is_sensitive(), [False, False, False, False, False])
 
     def test_find_favourite_count(self):
         self.assertEqual(self.df.find_favourite_count(), [113, 113, 113, 113, 113])

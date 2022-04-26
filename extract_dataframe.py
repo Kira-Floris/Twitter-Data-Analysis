@@ -52,14 +52,8 @@ class TweetDfExtractor:
         polarity = []
         subjectivity = []
         for data in self.tweets_list:
-            try:
-                polarity.append(data['polarity'])
-            except KeyError:
-                polarity.append(None)
-            try:
-                subjectivity.append(data['subjectivity'])
-            except KeyError:
-                subjectivity.append(None)
+            polarity.append(TextBlob(data['text']).sentiment.polarity)
+            subjectivity.append(TextBlob(data['text']).sentiment.subjectivity)
         return polarity, subjectivity
 
     def find_created_time(self)->list:
@@ -104,11 +98,7 @@ class TweetDfExtractor:
             try:
                 column.append(data['possibly_sensitive'])
             except KeyError:
-                column.append(None)
-            # try:
-            #     is_sensitive = [x['possibly_sensitive'] for x in data]
-            # except KeyError:
-            #     is_sensitive = ""
+                column.append(False)
         is_sensitive = column
 
         return is_sensitive
