@@ -1,6 +1,7 @@
 import json
 import pandas as pd
 from textblob import TextBlob
+from bs4 import BeautifulSoup as bs
 
 def read_json(json_file: str)->list:
     """
@@ -65,7 +66,7 @@ class TweetDfExtractor:
     def find_source(self)->list:
         source = []
         for data in self.tweets_list:
-            source.append(data['source'])
+            source.append(bs(data['source'],'lxml').text)
         return source
 
     def find_screen_name(self)->list:

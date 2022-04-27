@@ -43,8 +43,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_created_time(), created_at)
 
     def test_find_source(self):
-        source = ['<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>', '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>', '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>', '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>', '<a href="http://twitter.com/download/android" rel="nofollow">Twitter for Android</a>']
-
+        source = ['Twitter for Android','Twitter for Android','Twitter for Android','Twitter for Android','Twitter for Android']
         self.assertEqual(self.df.find_source(), source)
 
     def test_find_screen_name(self):
@@ -75,7 +74,7 @@ class TestTweetDfExtractor(unittest.TestCase):
         self.assertEqual(self.df.find_mentions(), [[{'screen_name': 'nikitheblogger', 'name': 'Neverforgetniki', 'id': 809188392089092097, 'id_str': '809188392089092097', 'indices': [3, 18]}],[{'screen_name': 'sagt_mit', 'name': 'Sie sagt es mit Bildern', 'id': 1511959918777184256, 'id_str': '1511959918777184256', 'indices': [3, 12]}],[{'screen_name': 'Kryptonoun', 'name': 'Kryptoguru', 'id': 951051508321345536, 'id_str': '951051508321345536', 'indices': [3, 14]}, {'screen_name': 'WRi007', 'name': 'Wolfgang Berger', 'id': 1214543251283357696, 'id_str': '1214543251283357696', 'indices': [16, 23]}],[{'screen_name': 'WRi007', 'name': 'Wolfgang Berger', 'id': 1214543251283357696, 'id_str': '1214543251283357696', 'indices': [3, 10]}],[{'screen_name': 'RolandTichy', 'name': 'Roland Tichy', 'id': 19962363, 'id_str': '19962363', 'indices': [3, 15]}]])
 
     def test_find_location(self):
-        self.assertEqual(self.df.find_location(), ['', '', "", "", ''])
+        self.assertEqual(self.df.find_location(), ['', '', '', 'Gnaden Vürttemberg ', 'Deutschland'])
 
 if __name__ == '__main__':
 	unittest.main()
