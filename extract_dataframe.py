@@ -135,7 +135,10 @@ class TweetDfExtractor:
     def find_location(self)->list:
         column = []
         for data in self.tweets_list:
-            column.append(data['user']['location'])
+            try:
+                column.append(data["retweeted_status"]['user']['location'])
+            except KeyError:
+                column.append("")
         location = column
                 
         return location
@@ -143,7 +146,7 @@ class TweetDfExtractor:
     def find_lang(self)->list:
         column = []
         for data in self.tweets_list:
-            column.append(data['user']['lang'])
+            column.append(data['lang'])
         lang = column
         return lang
 
