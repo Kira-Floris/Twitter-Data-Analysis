@@ -1,0 +1,21 @@
+on: [push, pull_request]
+
+jobs:
+  deploy:
+    name: Run 
+    runs-on: ubuntu-latest
+    steps:
+      name: Checkout
+      uses: actions/checkout@v2
+
+      name: Set up python
+      uses: actions/set-python@v3
+      with:
+        python-version: '3.x'
+
+      name: Install dependencies
+      run: 
+        pip install -r requirement.txt
+
+      name: run tests
+      run: python test_extract_dataframe.py
