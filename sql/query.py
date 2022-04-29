@@ -2,8 +2,12 @@ import csv
 import sqlite3
 import pandas as pd
 
+columns = ['id','created_at', 'source', 'original_text','polarity','subjectivity', 'lang', 'favorite_count', 'retweet_count', 
+            'original_author', 'followers_count','friends_count','possibly_sensitive', 'hashtags', 'user_mentions', 'place']
+
 class SavingToSQL:
 	def __init__(self, df:pd.DataFrame):
+		# initializing model
 		self.df = df
 		self.connection = sqlite3.connect('twitter-data-analysis.db')
 		self.cursor = self.connection.cursor()
@@ -38,13 +42,33 @@ class SavingToSQL:
 		contents = pd.read_csv(self.df)
 		self.connection.commit()
 		contents.to_sql('tweets', self.connection, if_exists='replace', index=True)
+		self.connection.commit()
+
+	def sql_fetchall(self):
 		self.cursor.execute('''SELECT * FROM tweets''')
 		display = pd.DataFrame(self.cursor.fetchall())
 		print(display)
+		self.connection.commit()
+
+	def sql_close(self):
 		self.connection.close()
+
+def fetchall():
+	connection = sqlite3.connect('twitter-data-analysis.db')
+	cursor = connection.cursor()
+	cursor.execute('''SELECT * FROM tweets''')
+	display = pd.DataFrame(cursor.fetchall())
+	display.columns = columns
+	print(display)
+	connection.commit()
+	connection.close()
+	return display
 
 if __name__ == '__main__':
 	file = '../data/processed_tweet_data.csv'
 	obj = SavingToSQL(file)
 	obj.create_table()
 	obj.csv_to_sql()
+	obj.sql_fetchall()
+	fetchall()
+	obj.sql_close()
